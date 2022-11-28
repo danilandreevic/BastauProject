@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% block title %}Bastau Project{% endblock %}
+{% block content %}
+{% load static %}
+  <div class="main-page ">
+    <div class="container">
+      <div class="main-page__block col-lg-4 col">
+        <div class="d-flex">
+          {% if string_case_count|length == 1%}
+            <div class="main-page__counter">0</div>
+            <div class="main-page__counter">0</div>
+            <div class="main-page__counter">0</div>
+            <div class="main-page__counter">{{string_case_count.0}}</div>
+          {%elif string_case_count|length == 2 %}
+            <div class="main-page__counter">0</div>
+            <div class="main-page__counter">0</div>
+            <div class="main-page__counter">{{string_case_count.0}}</div>
+            <div class="main-page__counter">{{string_case_count.1}}</div>
+          {% elif string_case_count|length == 3%}
+            <div class="main-page__counter">0</div>
+            <div class="main-page__counter">{{string_case_count.0}}</div>
+            <div class="main-page__counter">{{string_case_count.1}}</div>
+            <div class="main-page__counter">{{string_case_count.2}}</div>
+          {% elif string_case_count|length == 4%}
+            <div class="main-page__counter">{{string_case_count.0}}</div>
+            <div class="main-page__counter">{{string_case_count.1}}</div>
+            <div class="main-page__counter">{{string_case_count.2}}</div>
+            <div class="main-page__counter">{{string_case_count.3}}</div>
+          {%endif%}
+      </div>
+      <h4 class="d-flex justify-content-center my-3">количество кейсов на сайте</h4>
+      <div class="line mt-5 mb-2"></div>
+      <div class="main-page__des">выбери интересный кейс, реши задачу, получи приглашение на стажировку</div>
+      <div class="line mt-2 mb-5"></div>
+    </div>
+  </div>
+
+  <h5 class="sertificats__title ">Последние кейсы</р></h5>
+<hr class="hr_style">
+  <div class=" w-75 mx-auto">
+    <div class="row d-flex justify-content-center align-middle ">
+    {% for case in data %}
+      <div class="row ml-3">
+        <div class="main-cases__item mb-2  ">
+          <div class="main-cases__item__header">
+            {% if case.user_id.avatar %}
+            <img src="{{case.user_id.avatar.url}}" alt="стандартное">
+            {% else %}
+            <img src="{% static 'logo/default_photo_ImgID1.png' %}">
+            {% endif %}
+            <div class="main-cases__item__part-name ">{{case.user_id.name_of_partner}}</div>
+          </div>
+          <div class="main-cases__item__body">
+            <div class="main-cases__item__title hidden"><h5>{{case}}</h5></div>
+            <div class="main-cases__item__tags hidden">
+              {% for tag in case.tags.all %}
+              #{{tag}}
+              {% endfor %}
+            </div>
+          </div>
+          <div class="main-cases__item__footer">
+            <div class="main-cases__item__city">{{case.region}}</div>
+            <div class="main-cases__item__link"><a href="{% url 'detail_case' case.id %}">Перейти к кейсу</a></div>
+          </div>
+          <div>
+          </div>
+        </div>
+        <br>
+      </div>
+      {% endfor %}
+          </div>
+
+
+    <div class="container mt-5">
+      <div class="mutnyy__block row">
+        <div class="col-lg-6">
+          <img class="img-chel" src="../static/img_register/чел за компом картинка png.png" alt="">
+        </div>
+
+        <div class="content-myntogo col-lg-6">
+          <h3 class="mb-4">Размести задание, получи приглашение, пригласи победителя на стажировку</h3>
+          <div class="nav-link"><button><a href="{% url 'register' %}" class="text-white">Зарегистрироваться</a></button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="infa ">
+  <div class="container">
+    <div class="mutnyy__block row">
+      <div class="col-lg-6">
+        <img class="img-chel" src="../static/img_register/лупа картинка png.png" alt="">
+      </div>
+      <div class="content-myntogo col-lg-6">
+        <span>"Bastau Project" - Платформа, где вы встречаетесь с потенциальными работодателем. Вы получаете реальную задачу (кейс) от компании. При успешном ее решении получаете - приглашение пройти практику</span>
+      </div>
+    </div>
+
+  <div class="w-100 mx-auto">
+      <h1 class="sertificats__title ">Наши Партнеры</h1>
+    <hr class="hr_style">
+      <div class="row justify-content-center ml-1">
+            {% for partner in partners %}
+            <div class="card mb-5 main-cases__item animation" style="max-width: 300px; margin-left: 3%;margin-right: 3%; border-radius: 25px; display:inline-table;">
+                <a href="{% url 'detail_partner' partner.user_id %}">
+                    {% if partner.avatar %}
+                      <img src="{{partner.avatar.url}}" class="card-img-top img_partners" height="250px"  >
+                  {% else %}
+                    <img src="{% static 'logo/default_photo_ImgID1.png' %}">
+                  {% endif %}
+                    </a>
+              <div class="card-body">
+                <h5 class="card-title d-flex justify-content-center">{{partner.name_of_partner}}</h5>
+              </div>
+            </div>
+              {% endfor %}
+          </div>
+  </div>
+
+{% endblock %}

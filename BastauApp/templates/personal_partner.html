@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block title %}Личный кабинет{% endblock %}
+{% load widget_tweaks %}
+{% load static %}
+ {% block content %}
+    <div class="lk-fon">
+        <div class="container pt-5">
+            <div class="row">
+                <div class=" card col-lg-3 main-cases__item mb-1 mr-2 ml-2 h-100">
+                    {% if partner.avatar %}
+                        <div class="d-flex justify-content-center"><img src="{{partner.avatar.url}}" alt="" width="200px"></div>
+                    {% else %}
+                       <div class="d-flex justify-content-center"><img src="{% static 'logo/default_photo_ImgID1.png' %}"  height="200px"></div>
+                    {% endif %}
+                    <div class="d-flex justify-content-center mr-3 text-center">{{partner.Fio}}</div>
+                    <div class="d-flex justify-content-center">{{partner.name_of_partner}}</div>
+                    <div class="d-flex justify-content-center"><a href="{{partner.site}}">Ваш сайт</a></div>
+                    <a href='{% url "mycases" %}'><button class="btn btn-block btn-gradient">Мои кейсы</button></a>
+                    <a href='/logout/'><button class="btn btn-block btn-gradient mt-1">Выйти</button></a>
+                </div>
+
+                <div class="main-cases__item col-lg card">
+                    <form action="" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                            {% for field in form %}
+                                    {{ field.label_tag }}
+                                    {% render_field field class="form-control" %}
+                                    {% for error in field.errors %}
+                                        <span style="color:red">{{ error }}</span>
+                                    {% endfor %}
+                            {% endfor %}<br>
+                        <input type="submit" value="Сохранить" class="btn btn-block btn-gradient">
+
+                    </form>
+
+                </div>
+
+           </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+

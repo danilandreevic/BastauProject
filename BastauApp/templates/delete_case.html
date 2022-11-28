@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Удалить ответ{% endblock %}
+  {% block content %}
+<div class="lk-fon">
+<br><br><br><br>
+<section>
+  <div class="container pt-4">
+    <div class="row ">
+      <div class="col-md-6 mx-auto">
+        <div class="card my-5">
+          <div class="card-header text-black ">
+            <h2>Удалить кейс</h2>
+          </div>
+                <form method="post">{% csrf_token %}
+                    <h3 class="p-3">Вы уверены, что хотите удалить Кейс : "{{ object }}"?</h3>
+                    <input type="submit" value="Удалить" class="mt-4 btn btn-gradient btn-block">
+                </form>
+                  </form>
+               </div>
+              </div>
+          </div>
+        </div>
+</section>
+</div>
+  {% endblock %}
+

@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{data.title}}{% endblock %}
+{% load widget_tweaks %}
+ {% block content %}
+<div class="case-fon">
+<br><br><br><br>
+    <div class="w-75 align-item-center m-auto">
+        <div class="row">
+            <div class="col-lg-3 main-cases__item mb-1 mr-2 ml-2 h-100 card">
+                {% if data.user_id.avatar %}
+                    <div class="d-flex justify-content-center"><img src="{{data.user_id.avatar.url}}" alt="" width="200px"></div>
+                {% else %}
+                   <div class="d-flex justify-content-center"><img src="{% static 'logo/default_photo_ImgID1.png' %}"  height="200px"></div>
+                {% endif %}
+                <div class="d-flex justify-content-center">{{data.user_id.name_of_partner}}</div>
+                <div class="d-flex justify-content-center"><a href="{{data.user_id.site}}">Сайт</a></div>
+                <div class="d-flex justify-content-center"><a href="{% url 'detail_partner' data.user_id_id %}"><button class="btn  btn-gradient ">Личные данные</button></a></div>
+                <hr>
+                <table  class="w-100 table_info_partners">
+                    <tr class="">
+                        <td class="text-secondary ml-3">Регион</td>
+                        <td class="fs-1 font-s-info-parners mt-2">{{data.region}}</td>
+                    </tr>
+                    <tr class="">
+                        <td class="text-secondary align-items-start">Категория</td>
+                        <td class="fs-1 font-s-info-parners mt-2">{{data.category}}</td>
+                    </tr>
+                        <tr class="">
+                        <td class="text-secondary align-items-start">Дата закрытия</td>
+                        <td class="fs-1 font-s-info-parners mt-2">{{data.date_of_close}}</td>
+                    </tr>
+                    <tr class="">
+                        <td class="text-secondary align-items-start">Теги</td>
+                        <td class="fs-1 font-s-info-parners mt-2">
+                            {% for tag in data.tags.all %}
+                               #{{tag}}
+                              {% endfor %}</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="main-cases__item col-lg h-100 card">
+                 <b><p>{{data.title}}</p></b>
+                <h3>Описание:</h3>
+                <div class="mb-4">{{data.description}}</div>
+                <h3 class="mb-4">Дополнительные данные:</h3>
+                {% if data.file %}
+                 <p class="mb-4"><a href="{{data.file.url}}" download=""><button class="btn btn-secondary">Скачать файл</button></a></p>
+                {% else %}
+                 <p>Нет прикрепленного файла</p>
+                {% endif %}
+                <div class="justify-content-center align-bottom "><a href="{% url 'answer' data.pk %}"><button class="btn btn-outline-secondary btn-block ">Ответить</button></a></div>
+            </div>
+       </div>
+    </div>
+</div>
+{% endblock %}
+
+

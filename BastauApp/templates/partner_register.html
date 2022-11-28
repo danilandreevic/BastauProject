@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}Регистрация партнера{% endblock %}
+{% load widget_tweaks %}
+{% block content %}
+<div class="lk-fon">
+<br><br><br><br>
+<section>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 mx-auto mb-5">
+          <div class="card">
+            <div class="card-header text-black">
+              <h2>Регистрация партнера</h2>
+            </div>
+            <div class="card-body">
+                <form action="{% url 'partner_register' %}" method="POST" novalidate>
+                  {% csrf_token %}
+                     {% for field in form.visible_fields %}
+                       <div class="form-group">
+                           {{ field.label_tag }}
+                              {% render_field field class="form-control" %}
+                                {% for error in field.errors %}
+                                  <span style="color:red">{{ error }}</span>
+                                {% endfor %}
+                           {% endfor %} <br>
+                       <button class="btn-gradient btn-block ">Зарегистрироваться</a></button>
+                    </form>
+            </div>
+             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+{% endblock %}

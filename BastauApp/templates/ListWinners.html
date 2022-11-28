@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}Победители{% endblock %}
+  {% block content %}
+<div class="win-fon pt-5">
+    <div class="container">
+        <h1 class="text-center mb-5">Победители</h1>
+        <div class="row d-flex justify-content-center ">
+              {% for item in object_list %}
+              <div class="card mb-3 main-cases__item w-100" style="max-height:300px; margin-left: 2%;margin-right: 2%; border-radius: 25px; display:inline-table;">
+                  {{item.id_student}}
+                  <div class="card-body">
+                      <h5 class="card-title d-flex justify-content-center ">{{item.id_case}}</h5>
+                  </div>
+                  <div class="card-body">
+                      <h5 class="card-title d-flex text-align-right font-weight-light  float-right">{{item.id_case.user_id}}</h5>
+                  </div>
+              </div>
+    {% endfor %}
+        </div>
+        <div class="grid-img-right text-right bg bg1 pb-4" >
+            {% include 'include/pagination.html' %}
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

@@ -1,0 +1,62 @@
+
+{% extends 'base.html' %}
+{% block title %}Ответы{% endblock %}
+  {% block content %}
+<div class="lk-fon">
+<br><br><br><br>
+ <div class="container">
+     <h1 class="mb-3 hidden">Всего ответов: {{all_answer}}</h1>
+     <div class="row align-items-start ">
+         <div class="col-lg-3 mr-2 main-cases__item cases_public case">
+            <span></span>
+                <a href='{% url "mycases" %}'><button class="btn btn-block btn-primary"> Мои кейсы</button></a>
+                <button class="btn btn-block btn-gradient mt-1">Победителей: {{answer_victory}}</button>
+                <button class="btn btn-block btn-warning mt-1">В ожидании: {{answer_waiting}} </button>
+                <button class="btn btn-block btn-danger mt-1">Отказано: {{answer_defeat}} </button>
+         </div>
+         <div class="col-lg-8">
+             <div class="row ">
+{% for item in data.cases.all %}
+         <div class="col-lg-6 mb-2">
+             <div class="row ">
+
+         <div class="main-cases__item  card ">
+            <span class="case__title hidden">
+              <a href="{% url 'detail_student' item.id_student_id %}">{{item.id_student}}</a>
+            </span>
+                  <p>{{item.category}}</p>
+                    <div class="row d-flex justify-content-center">
+                        <a href="{% url 'detail_case' item.id_case_id %}"><button class="btn btn-gradient mr-1 ml-2 mb-1">Перейти к кейсу</button></a>
+                        {% if item.File.url != None%}
+                        <a href="{{item.File.url}}" download=""><button class="btn btn-gradient mr-1 ml-2 mb-1">Скачать файл</button></a>
+                        {% endif %}
+                        <a href="{{item.Url}}"><button class="btn btn-gradient mr-1 ml-2">Ссылка</button></a>
+                    </div>
+             <div class="text-center"><a href="{% url 'updatewinner' item.id %}"><button class="btn btn-info mr-1 ml-2 btn-block mt-2">Выбрать статус студента</button></a></div>
+             <div class="text-center">
+                         {%if item.status == 'Отказ'%}
+                         <div class="text-danger">Отказано</div>
+                         {%elif item.status == 'Победа'%}
+                         <div class="text-success">Победитель</div>
+                         {%else%}
+                         <div class="text-primary">В ожидании...</div>
+                         {%endif%}
+             </div>
+         </div>
+                </div>
+         </div>
+                 {% endfor %}
+     <br>
+             </div>
+         </div>
+     </div>
+ </div>
+      <div class="grid-img-right mt-4 text-right bg bg1" >
+          {% include 'include/pagination.html' %}
+      </div>
+</div>
+  {% endblock %}
+
+
+
+

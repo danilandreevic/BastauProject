@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block title %}Мои кейсы{% endblock %}
+  {% block content %}
+<div class="lk-fon">
+<br><br><br><br>
+ <div class="container">
+     <h1 class="mb-3">Опубликовано кейсов: {{total_active_records}}</h1>
+     <div class="row align-items-start">
+         <div class="col-lg-3 mr-2 main-cases__item cases_public card">
+            <span></span>
+                <a href='{% url "personal_partner" user.id %}'><button class="btn btn-block btn-primary">Редактировать профиль</button></a>
+                <a href='{% url "mycases" %}'><button class="btn btn-block btn-gradient mt-1">Опубликовано: {{total_active_records}}</button></a>
+                <a href='{% url "mycasesArchive" %}'><button class="btn btn-block btn-danger mt-1">В архиве: {{case_isnt_published}} </button></a>
+         </div>
+         <div class="col-lg-8">
+             <div class="row ">
+    {% for item in object_list %}
+    {% if item.user_id.user.email == request.user.email %}
+         <div class="col-lg-6 mb-2">
+             <div class="row ">
+
+         <div class="main-cases__item hidden card">
+            <span class="case__title hidden">
+                {{item}}
+            </span>
+                  <p>{{item.category}}</p>
+                    <div class="row">
+                        <a href="{% url 'detail_view_for_Partner' item.id %}"><button class="btn btn-gradient mr-1 ml-2 mb-1">Открыть</button></a>
+                        <a href="{% url 'show_answer' item.id %}"><button class="btn btn-gradient mr-1 ml-2">Ответы</button></a>
+                        <a href="{% url 'delete_case' item.id %}"><button class="btn btn-gradient mr-1 ml-2">Удалить</button></a>
+                        <a href="{% url 'case_update' item.id %}"><button class="btn btn-gradient mr-1 ml-2">Редактировать</button></a>
+
+                    </div>
+             </div>
+
+                </div>
+         </div>
+     <br>
+         {% endif %}
+    {% endfor %}
+             </div>
+         </div>
+     </div>
+ </div>
+      <div class="grid-img-right mt-4 text-right bg bg1" >
+          {% include 'include/pagination.html' %}
+      </div>
+  {% endblock %}
+</div>
+
+
+

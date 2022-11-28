@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}Наши партнёры{% endblock %}
+{% load static %}
+  {% block content %}
+  <div class="partners-fon">
+    <div class="container pt-5">
+        <div class="row d-flex justify-content-center ">
+              {% for item in object_list %}
+              <div class="card mb-3 main-cases__item animation block" style="max-width: 300px; margin-left: 2%;margin-right: 2%; border-radius: 25px; display:inline-table;">
+                  <a href="{% url 'detail_partner' item.user_id %}">
+                      {% if item.avatar %}
+                        <img src="{{item.avatar.url}}" class="card-img-top " height="250px"  >
+                    {% else %}
+                       <img src="{% static 'logo/default_photo_ImgID1.png' %}"  height="250px">
+                    {% endif %}
+                  </a>
+                  <div class="card-body">
+                      <h5 class="card-title d-flex justify-content-center">{{item.name_of_partner}}</h5>
+                  </div>
+              </div>
+    {% endfor %}
+        </div>
+        <div class="grid-img-right text-right bg bg1 pb-4" >
+            {% include 'include/pagination.html' %}
+        </div>
+  </div>
+</div>
+
+  {% endblock %}

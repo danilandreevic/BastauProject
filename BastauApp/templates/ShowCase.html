@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% block title %}Кейсы{% endblock %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% load widget_tweaks %}
+  {% block content %}
+<div class="case-fon">
+  <div class="case-page">
+    <div class="container">
+        <div class="row ">
+            <div class="col-lg-9 card p-3 mr-2">
+                 <form method="get">
+                    {% csrf_token %}
+                     <div class="row">
+                        <div class="col">
+                            {{ filter.form.search }}
+                        </div>
+                            <button type="submit" class="btn btn-gradient" >Поиск</button><br>
+                       </div>
+                 </form>
+                     <br>
+                        <div class="row">
+                      {% for fil in orders %}
+                        <div class=" col-lg-6 ">
+                             <div class="row ml-3">
+                        <div class="main-cases__item mb-2 card">
+
+                          <div class="main-cases__item__header">
+                            {% if fil.user_id.avatar %}
+                            <img src="{{fil.user_id.avatar.url}}" alt="стандартное">
+                            {% else %}
+                              <img src="{% static 'logo/default_photo_ImgID1.png' %}">
+                            {% endif %}
+                            <div class="main-cases__item__part-name ">{{fil.user_id.name_of_partner}}</div>
+                        </div>
+                          <div class="main-cases__item__body">
+                            <div class="main-cases__item__title hidden"><h5>{{fil}}</h5></div>
+                            <div class="main-cases__item__tags hidden">
+                              {% for tag in fil.tags.all %}
+                               #{{tag}}
+                              {% endfor %}
+                            </div>
+                          </div>
+                          <div class="main-cases__item__footer">
+                            <div class="main-cases__item__city">{{fil.region}}</div>
+                            <div class="main-cases__item__link"><a href="{% url 'detail_case' fil.id %}">Перейти к кейсу</a></div>
+                          </div>
+                          <div>
+                            </div>
+                           </div>
+                        <br>
+                            </div>
+                            </div>
+
+                      {% endfor %}
+                        </div>
+                             </div>
+                            <div class="col-lg card p-4 h-50">
+                                <div class="sticky">
+                                    <h2>Фильтрация</h2>
+                              <form method="get">
+                                {% csrf_token %}
+
+                                    {{ filter.form.category|as_crispy_field }}
+                                    {{ filter.form.region|as_crispy_field }}
+                                    {{ filter.form.user_id|as_crispy_field }}
+
+                                {{ filter.form.tags}}<br>
+                                <button type="submit" class="mb-2 btn btn-gradient btn-block">Фильтровать</button>
+                              </form>
+                                    <a href="{% url 'showcases' %}">Отменить фильтрацию</a>
+                                </div>
+                </div>
+            </div>
+        </div>
+      <div class="grid-img-right mt-4 mb-4 text-right bg bg1 " >
+          {% include 'include/pagination.html' %}
+      </div>
+  </div>
+
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script
+  src="https://code.jquery.com/jquery-3.6.0.min.js"
+  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+  crossorigin="anonymous"></script>
+ <script>
+    let formField = document.querySelectorAll("body > div > div > form > div:nth-child(1n) input")
+    formField.forEach(element => {
+        element.classList.add('form-control');
+    });
+    let formSelect1 = document.querySelector("#user_id")
+    let formSelect2 = document.querySelector("#user_id")
+    formSelect1.classList.add('custom-select');
+    formSelect2.classList.add('custom-select');
+
+
+</script>
+  {% endblock %}
+    </div>
+
+
+
+

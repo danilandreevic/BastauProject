@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block title %}Мои ответы{% endblock %}
+  {% block content %}
+<br><br>
+<div class="lk-fon">
+ <div class="container">
+     <h1 class="mb-3">Мои ответы {{total_active_records}}</h1>
+     <div class="row align-items-start">
+         <div class="col-lg-3 mr-2 main-cases__item cases_public card">
+            <span></span>
+                <a href='{% url "personal" user.id %}'><button class="btn btn-block btn-primary">Редактировать профиль</button></a>
+                <a href='{% url "show_answer_student" %}'><button class="btn btn-block btn-info mt-1">Всего ответов: {{all_answer}}</button></a>
+                <a href='{% url "show_answer_student_victory" %}'><button class="btn btn-block btn-success mt-1">Побед: {{answer_victory}}</button></a>
+                <a href='{% url "show_answer_student_waiting" %}'><button class="btn btn-block btn-warning mt-1">В ожидании: {{answer_waiting}}</button></a>
+                <a href='{% url "show_answer_student_defeat" %}'><button class="btn btn-block btn-danger mt-1">Отказано: {{answer_defeat}} </button></a>
+         </div>
+         <div class="col-lg-8">
+             <div class="row ">
+    {% for item in object_list %}
+
+         <div class="col-lg-6 mb-2">
+             <div class="row ">
+                 <div class="main-cases__item hidden justify-content-center card">
+                    <span class="case__title">
+                        <a href="{% url 'detail_case' item.id_case_id %}">{{item.id_case}}</a>
+                    </span>
+                          <p>{{item.category}}</p>
+                            <div class="row">
+                                <a href="{{item.Url}}"><button class="btn btn-gradient mr-1 ml-2 mb-1">Ссылка</button></a>
+                                {% if item.File.url != None%}
+                                <a href="{{item.File.url}}" download=""><button class="btn btn-gradient mr-1 ml-2 mb-1">Скачать файл</button></a>
+                                {% endif %}
+                                <a href="{% url 'delete_answer' item.id %}"><button class="btn btn-gradient mr-1 ml-2 mb-1">Удалить</button></a>
+                                <a href="{% url 'answer_update' item.id %}"><button class="btn btn-gradient mr-1 ml-2 mb-1">Редактировать</button></a>
+                            </div>
+                     <div class="text-center">
+                         {%if item.status == 'Отказ'%}
+                         К сожалению, Вам отказали.
+                         {%elif item.status == 'Победа'%}
+                         Поздравляем, Вы выиграли!
+                         {%else%}
+                         Ваш ответ еще не рассмотрели.
+                         {%endif%}
+                     </div>
+                     </div>
+                </div>
+         </div>
+     <br>
+
+    {% endfor %}
+             </div>
+         </div>
+     </div>
+      <div class="grid-img-right mt-4 text-right bg bg1" >
+          {% include 'include/pagination.html' %}
+      </div>
+ </div>
+</div>
+  {% endblock %}
